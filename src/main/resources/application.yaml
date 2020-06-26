@@ -1,0 +1,20 @@
+
+spring:
+  datasource:
+    url: jdbc:sqlite:test.db
+    driver-class-name: org.sqlite.JDBC
+    username: root
+    password: 1234
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLiteDialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+
+
+security:
+  jwt:
+    expire_time: 3600
+    secret_key: hussard015
