@@ -14,11 +14,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AssignmentDto {
 
+    @Getter
     public static class Req {
 
         @NotNull
         @Size(max = 100)
         public String address;
+
+        @Builder
+        public Req(@NotNull @Size(max = 100) String address) {
+            this.address = address;
+        }
 
         public Assignment toEntity(Long passengerId) {
             return Assignment.builder()

@@ -1,25 +1,23 @@
 package com.dramancompany.taxiServiceBe.user.controller;
 
-import com.dramancompany.taxiServiceBe.IntegrationTest;
+import com.dramancompany.taxiServiceBe.ControllerTest;
 import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.dramancompany.taxiServiceBe.user.dto.UserDto;
-import com.dramancompany.taxiServiceBe.user.repository.UserRepository;
 import com.dramancompany.taxiServiceBe.user.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.dramancompany.taxiServiceBe.restDoc.ApiDocumentUtils.getDocumentRequest;
 import static com.dramancompany.taxiServiceBe.restDoc.ApiDocumentUtils.getDocumentResponse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -27,23 +25,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserControllerTest extends IntegrationTest {
+@WebMvcTest(UserController.class)
+public class UserControllerTest extends ControllerTest {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
+    @MockBean
     private UserService userService;
-
-    @Before
-    public void setUp() throws Exception {
-        userRepository.deleteAll();
-    }
 
     @Test
     public void 회원가입() throws Exception {
         // given
         String userSignUpReq = readJson("classpath:user/UserSignUpReq.json");
+        UserDto.SignUpRes userSignUpRes = objectMapper.readValue(readJson("classpath:user/UserSignUpRes.json"), UserDto.SignUpRes.class);
+        given(userService.signUp(any())).willReturn(userSignUpRes);
 
         // when
         mvc.perform(post("/api/v1/pub/signUp")
@@ -70,11 +63,10 @@ public class UserControllerTest extends IntegrationTest {
     @Test
     public void 로그인() throws Exception {
         // given
-        // 회원가입을 시켜 놓는다.
-        UserDto.SignUpReq UserSignUpReq = objectMapper.readValue(readJson("classpath:user/UserSignUpReq.json"), UserDto.SignUpReq.class);
-        userService.singUp(UserSignUpReq);
-
         String UserSignInReq = readJson("classpath:user/UserSignInReq.json");
+        UserDto.SignInRes userSignInRes = objectMapper.readValue(readJson("classpath:user/UserSignInRes.json"), UserDto.SignInRes.class);
+        given(userService.signIn(any())).willReturn(userSignInRes);
+
 
         // when
         mvc.perform(post("/api/v1/pub/signIn")

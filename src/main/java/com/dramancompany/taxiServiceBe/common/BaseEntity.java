@@ -16,14 +16,6 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
-//    @Column(name = "created_by")
-//    @CreatedBy
-//    private String createdBy;
-//
-//    @Column(name = "modified_by")
-//    @LastModifiedBy
-//    private String modifiedBy;
-
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime createdDt;

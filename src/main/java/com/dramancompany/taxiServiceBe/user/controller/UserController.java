@@ -20,7 +20,7 @@ public class UserController {
     public UserDto.SignUpRes signUp(
             @RequestBody @Valid UserDto.SignUpReq req
     ) {
-        return userService.singUp(req);
+        return userService.signUp(req);
     }
 
     @PostMapping("/signIn")

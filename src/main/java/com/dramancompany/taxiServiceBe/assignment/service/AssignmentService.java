@@ -17,23 +17,26 @@ public class AssignmentService {
 
     private final AssignmentRepository assignmentRepository;
 
-    @Transactional(readOnly = true)
     public List<AssignmentDto.Res> getAll() {
-        return assignmentRepository.findByOrderByCreatedDtDesc()
+        return assignmentRepository.findByOrderByRequestDtDesc()
+                .stream()
                 .map(AssignmentDto.Res::of)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public AssignmentDto.Res requestAssignment(User user, AssignmentDto.Req req) {
         if (!user.isPassenger()) {
             throw new IllegalArgumentException("해당 유저는 승객이 아닙니다.");
         }
+
+        if (hasAssignment(user.getId())) {
+            throw new IllegalArgumentException("해당 유저는 배차 중입니다.");
+        }
+
         return AssignmentDto.Res.of(assignmentRepository
                 .save(req.toEntity(user.getId())));
     }
 
-    @Transactional
     public AssignmentDto.Res catchAssignment(User user, Long assignmentId) {
         if (!user.isDriver()) {
             throw new IllegalArgumentException("해당 유저는 기사가 아닙니다.");
@@ -43,11 +46,15 @@ public class AssignmentService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 배차가 존재하지 않습니다."));
 
         if (assignment.isCompleted()) {
-            throw new IllegalStateException("이미 배차가 완료되었습니다.");
+            throw new IllegalArgumentException("이미 배차가 완료되었습니다.");
         }
 
         assignment.complete(user.getId());
 
         return AssignmentDto.Res.of(assignment);
+    }
+
+    private boolean hasAssignment(Long passengerId) {
+        return assignmentRepository.findByPassengerIdAndStatus(passengerId, Assignment.Status.WAITING).isPresent();
     }
 }

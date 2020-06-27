@@ -41,11 +41,6 @@ public class AssignmentControllerTest extends ControllerTest {
     @MockBean
     private AssignmentService assignmentService;
 
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
     @Test
     public void 차량배차요청() throws Exception {
         // given
@@ -84,6 +79,7 @@ public class AssignmentControllerTest extends ControllerTest {
         AssignmentDto.Res assignmentRes = objectMapper.readValue(readJson("classpath:assignment/AssignmentCompleteRes.json"), AssignmentDto.Res.class);
         given(assignmentService.catchAssignment(any(), anyLong())).willReturn(assignmentRes);
 
+        // when
         mvc.perform(post("/api/v1/assignment/driver/{assignmentId}", assignmentId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -113,6 +109,7 @@ public class AssignmentControllerTest extends ControllerTest {
                 });
         given(assignmentService.getAll()).willReturn(assignmentResList);
 
+        // when
         mvc.perform(get("/api/v1/assignment")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)

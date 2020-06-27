@@ -21,6 +21,13 @@ public class UserDto {
         @NotNull
         private User.UserType userType;
 
+        @Builder
+        public SignUpReq(String username, String password, User.UserType userType) {
+            this.username = username;
+            this.password = password;
+            this.userType = userType;
+        }
+
         public User toEntity() {
             return User.builder()
                     .username(username)
@@ -36,11 +43,13 @@ public class UserDto {
 
     @Getter
     public static class SignUpRes{
+        private Long id;
         private String username;
         private User.UserType userType;
 
         @Builder
-        public SignUpRes(String username, User.UserType userType, String token) {
+        public SignUpRes(Long id, String username, User.UserType userType) {
+            this.id = id;
             this.username = username;
             this.userType = userType;
         }
@@ -48,6 +57,7 @@ public class UserDto {
         public static SignUpRes of(User user) {
             return SignUpRes
                     .builder()
+                    .id(user.getId())
                     .username(user.getUsername())
                     .userType(user.getUserType())
                     .build();
@@ -61,6 +71,12 @@ public class UserDto {
         private String username;
         @NotNull
         private String password;
+
+        @Builder
+        public SignInReq(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
     }
 
     @Getter

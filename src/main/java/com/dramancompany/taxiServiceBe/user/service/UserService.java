@@ -33,7 +33,7 @@ public class UserService {
 
     }
 
-    public UserDto.SignUpRes singUp(UserDto.SignUpReq req) {
+    public UserDto.SignUpRes signUp(UserDto.SignUpReq req) {
         if (verifyDupUsername(req.getUsername())) {
             throw new IllegalArgumentException("중복된 유저입니다.");
         }
