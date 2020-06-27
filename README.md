@@ -13,11 +13,11 @@
 - Sqlite
 
 # 프로젝트 설명
-- JWT를 사용하여 인증을 구현하였습니다.
-- 
+- Spring Security와 JWT를 사용하여 인증을 구현하였습니다.
+- Spring Rest Docs를 사용하여 API 문서를 관리합니다.
 
 # Rest API document
-https://github.com/hussard015/TaxiServiceBe/src/docs/asciidoc/index.html
+서버 실행 후, http://localhost:8080/docs/index.html 에서 확인
 
 # ERD
 
