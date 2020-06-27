@@ -1,6 +1,7 @@
 package com.dramancompany.taxiServiceBe.user.controller;
 
 import com.dramancompany.taxiServiceBe.ControllerTest;
+import com.dramancompany.taxiServiceBe.common.JwtAuthenticationEntryPoint;
 import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.dramancompany.taxiServiceBe.user.dto.UserDto;
 import com.dramancompany.taxiServiceBe.user.service.UserService;
@@ -40,7 +41,6 @@ public class UserControllerTest extends ControllerTest {
 
         // when
         mvc.perform(post("/api/v1/pub/signUp")
-                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userSignUpReq)
         )
@@ -70,7 +70,6 @@ public class UserControllerTest extends ControllerTest {
 
         // when
         mvc.perform(post("/api/v1/pub/signIn")
-                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(UserSignInReq)
         )

@@ -1,6 +1,7 @@
 package com.dramancompany.taxiServiceBe;
 
 
+import com.dramancompany.taxiServiceBe.common.JwtAuthenticationEntryPoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
@@ -22,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
+@Import({JwtAuthenticationEntryPoint.class})
 @AutoConfigureRestDocs
 @Ignore
 public class ControllerTest {

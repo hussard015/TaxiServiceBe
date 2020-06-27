@@ -4,6 +4,7 @@ import com.dramancompany.taxiServiceBe.ControllerTest;
 import com.dramancompany.taxiServiceBe.assignment.domain.Assignment;
 import com.dramancompany.taxiServiceBe.assignment.dto.AssignmentDto;
 import com.dramancompany.taxiServiceBe.assignment.service.AssignmentService;
+import com.dramancompany.taxiServiceBe.common.JwtAuthenticationEntryPoint;
 import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.Before;

@@ -4,14 +4,17 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.dramancompany.taxiServiceBe.common.ErrorResponse;
 import com.dramancompany.taxiServiceBe.user.domain.User;
-import org.springframework.beans.factory.annotation.Value;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,24 +31,18 @@ public class JwtFilter extends BasicAuthenticationFilter {
         super(authenticationManager);
     }
 
-    // endpoint every request hit with authorization
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // Read the Authorization header, where the JWT Token should be
         String header = request.getHeader(HEADER_STRING);
 
-        // If header does not contain BEARER or is null delegate to Spring impl and exit
         if (header == null || !header.startsWith(TOKEN_PREFIX)) {
-            // rest of the spring pipeline
             chain.doFilter(request, response);
             return;
         }
 
-        // If header is present, try grab user principal from database and perform authorization
         Authentication authentication = getUsernamePasswordAuthentication(request);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Continue filter execution
         chain.doFilter(request, response);
     }
 
@@ -53,12 +50,11 @@ public class JwtFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
             // parse the token and validate it (decode)
-            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(JwtSetting.SECRET_KEY))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""));
-
-
             try {
+                DecodedJWT jwt = JWT.require(Algorithm.HMAC512(JwtSetting.SECRET_KEY))
+                        .build()
+                        .verify(token.replace(TOKEN_PREFIX, ""));
+
                 User user = User
                         .builder()
                         .id(jwt.getClaim("userId").asLong())
@@ -67,7 +63,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
                         .build();
 
                 return new UsernamePasswordAuthenticationToken(user, null, null);
-            } catch (JWTVerificationException exception) {
+            } catch (JWTVerificationException e) {
                 return null;
             }
         }
