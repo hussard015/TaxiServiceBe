@@ -17,6 +17,7 @@ public class AssignmentService {
 
     private final AssignmentRepository assignmentRepository;
 
+    @Transactional(readOnly = true)
     public List<AssignmentDto.Res> getAll() {
         return assignmentRepository.findByOrderByCreatedDtDesc()
                 .map(AssignmentDto.Res::of)

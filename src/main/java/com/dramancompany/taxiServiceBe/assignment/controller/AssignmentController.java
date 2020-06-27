@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,11 +25,11 @@ public class AssignmentController {
     @PostMapping
     public AssignmentDto.Res requestAssignment(
             @AuthenticationPrincipal User user,
-            @RequestBody AssignmentDto.Req req) {
+            @RequestBody @Valid AssignmentDto.Req req) {
         return assignmentService.requestAssignment(user, req);
     }
 
-    @PostMapping("/driver/:assignmentId")
+    @PostMapping("/driver/{assignmentId}")
     public AssignmentDto.Res catchAssignment(
             @AuthenticationPrincipal User user,
             @PathVariable Long assignmentId

@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "passengerId": 1,
+  "driverId": 2,
+  "address": "서울시 경기도 강남역",
+  "status": 1,
+  "requestDt": "2020-06-27T13:06:31.419",
+  "completeDt": "2020-06-27T13:29:18.454"
+}

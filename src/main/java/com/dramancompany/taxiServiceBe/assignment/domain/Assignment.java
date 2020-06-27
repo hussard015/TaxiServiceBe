@@ -1,8 +1,10 @@
 package com.dramancompany.taxiServiceBe.assignment.domain;
 
 import com.dramancompany.taxiServiceBe.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -10,8 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Assignment extends BaseEntity {
 
@@ -25,34 +30,45 @@ public class Assignment extends BaseEntity {
     public Long driverId;
     @Column(nullable = false, length = 100)
     public String address;
-    public Progress progress;
+    public Status status;
 
-    public LocalDateTime requestTime;
-    public LocalDateTime completeTime;
+    public LocalDateTime requestDt;
+    public LocalDateTime completeDt;
 
-    public enum Progress {
+    public enum Status {
         WAITING,
-        COMPLETE
+        COMPLETE;
+
+        @JsonValue
+        public int toValue() {
+            return ordinal();
+        }
+
+        public static String toText() {
+            return Stream.of(values())
+                    .map(status -> status.ordinal() + " = " + status.name())
+                    .collect(Collectors.joining(", "));
+        }
     }
 
     public boolean isCompleted() {
-        return driverId != null || progress == Progress.COMPLETE;
+        return driverId != null || status == Status.COMPLETE;
     }
 
     public Assignment complete(Long driverId) {
         this.driverId = driverId;
-        this.progress = Progress.COMPLETE;
-        this.completeTime = LocalDateTime.now();
+        this.status = Status.COMPLETE;
+        this.completeDt = LocalDateTime.now();
         return this;
     }
 
     @Builder
-    public Assignment(Long passengerId, Long driverId, String address, Progress progress, LocalDateTime requestTime, LocalDateTime completeTime) {
+    public Assignment(Long passengerId, Long driverId, String address, Status status, LocalDateTime requestDt, LocalDateTime completeDt) {
         this.passengerId = passengerId;
         this.driverId = driverId;
         this.address = address;
-        this.progress = progress;
-        this.requestTime = requestTime;
-        this.completeTime = completeTime;
+        this.status = status;
+        this.requestDt = requestDt;
+        this.completeDt = completeDt;
     }
 }

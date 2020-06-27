@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "passengerId": 1,
+  "driverId": null,
+  "address": "서울시 강남구 강남역",
+  "status": 0,
+  "requestDt": "2020-06-27T13:06:31.419",
+  "completeDt": null
+}
