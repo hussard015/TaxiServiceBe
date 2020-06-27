@@ -1,0 +1,39 @@
+= Rest Docs Sample API Document
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+[[introduction]]
+== 소개
+택시 배차 앱 API
+
+== 공통 사항
+
+=== Domain
+
+|===
+| 환경 | domain
+
+| `http://localhost:8080`
+
+|===
+
+
+=== Header
+
+|===
+| name | 설명
+
+| `Authorization`
+| API를 사용하기 위한 인증 키 +
+예) 'Bearer' + 토큰
+|===
+
+[[사용자]]
+
+== 사용자
+
+=== 회원 가입
