@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AssignmentDto {
 
     @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Req {
 
         @NotNull
@@ -22,7 +22,7 @@ public class AssignmentDto {
         public String address;
 
         @Builder
-        public Req(@NotNull @Size(max = 100) String address) {
+        public Req(String address) {
             this.address = address;
         }
 

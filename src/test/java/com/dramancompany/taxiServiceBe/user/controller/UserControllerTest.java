@@ -99,6 +99,7 @@ public class UserControllerTest extends ControllerTest {
 
     private List<FieldDescriptor> getUserSignUpResField() {
         return Arrays.asList(
+                fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 고유 아이디"),
                 fieldWithPath("username").type(JsonFieldType.STRING).description("유저 아이디 (이메일 형식)"),
                 fieldWithPath("userType").type(JsonFieldType.NUMBER).description("유저 타입 : " + User.UserType.toText()));
     }
@@ -111,6 +112,7 @@ public class UserControllerTest extends ControllerTest {
 
     private List<FieldDescriptor> getUserSignInResField() {
         return Arrays.asList(
+                fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 고유 아이디"),
                 fieldWithPath("username").type(JsonFieldType.STRING).description("유저 아이디 (이메일 형식)"),
                 fieldWithPath("userType").type(JsonFieldType.NUMBER).description("유저 타입 : " + User.UserType.toText()),
                 fieldWithPath("token").type(JsonFieldType.STRING).description("유저 JWT 토큰"));

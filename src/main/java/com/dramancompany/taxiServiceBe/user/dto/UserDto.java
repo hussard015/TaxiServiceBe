@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserDto {
 
     @Getter
@@ -81,12 +80,14 @@ public class UserDto {
 
     @Getter
     public static class SignInRes{
+        private Long id;
         private String username;
         private User.UserType userType;
         private String token;
 
         @Builder
-        public SignInRes(String username, User.UserType userType, String token) {
+        public SignInRes(Long id, String username, User.UserType userType, String token) {
+            this.id = id;
             this.username = username;
             this.userType = userType;
             this.token = token;
@@ -95,6 +96,7 @@ public class UserDto {
         public static SignInRes of(User user) {
             return SignInRes
                     .builder()
+                    .id(user.getId())
                     .username(user.getUsername())
                     .userType(user.getUserType())
                     .build();

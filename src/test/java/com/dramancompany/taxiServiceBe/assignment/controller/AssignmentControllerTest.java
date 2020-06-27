@@ -42,7 +42,7 @@ public class AssignmentControllerTest extends ControllerTest {
     private AssignmentService assignmentService;
 
     @Test
-    public void 차량배차요청() throws Exception {
+    public void 배차요청() throws Exception {
         // given
         createPassenger();
         String assignmentReq = readJson("classpath:assignment/AssignmentReq.json");
@@ -72,7 +72,7 @@ public class AssignmentControllerTest extends ControllerTest {
     }
 
     @Test
-    public void 차량배차완료() throws Exception {
+    public void 배차완료() throws Exception {
         // given
         createDriver();
         Long assignmentId = 1L;
@@ -101,7 +101,7 @@ public class AssignmentControllerTest extends ControllerTest {
     }
 
     @Test
-    public void 차량배차목록조회() throws Exception {
+    public void 배차목록조회() throws Exception {
         // given
         createPassenger();
         List<AssignmentDto.Res> assignmentResList = objectMapper.readValue(readJson("classpath:assignment/AssignmentResList.json"),
