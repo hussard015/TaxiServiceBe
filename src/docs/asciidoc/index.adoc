@@ -96,8 +96,10 @@ Response HTTP Example:
 
 include::{snippets}/user-signIn/http-response.adoc[]
 
-=== 배차 목록 조회
+[[배차]]
+== 배차
 
+=== 배차 목록 조회
 CURL:
 
 include::{snippets}/assignment-list/curl-request.adoc[]
