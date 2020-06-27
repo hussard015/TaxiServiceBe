@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signUp")
-    public UserDto.SignUpRes signup(
+    public UserDto.SignUpRes signUp(
             @RequestBody @Valid UserDto.SignUpReq req
     ) {
         return userService.singUp(req);

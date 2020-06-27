@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -37,11 +38,18 @@ public class User extends BaseEntity {
             return ordinal();
         }
 
+        @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
         public static UserType of(int num) {
             return Stream.of(values())
                     .filter(userType -> userType.ordinal() == num)
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("Unknown enum type"));
+        }
+
+        public static String toText() {
+            return Stream.of(values())
+                    .map(userType -> userType.ordinal() + " = " + userType.name())
+                    .collect(Collectors.joining(", "));
         }
     }
 

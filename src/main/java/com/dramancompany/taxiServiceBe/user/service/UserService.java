@@ -23,7 +23,7 @@ public class UserService {
         User user = userRepository.findByUsername(req.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("해당 이메일이 존재하지 않습니다."));
 
-        if (!passwordEncoder.matches(user.getPassword(), req.getPassword())) {
+        if (!passwordEncoder.matches(req.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("패스워드가 일지하지 않습니다.");
         }
 
