@@ -1,7 +1,6 @@
 package com.dramancompany.taxiServiceBe.user.controller;
 
 import com.dramancompany.taxiServiceBe.ControllerTest;
-import com.dramancompany.taxiServiceBe.common.JwtAuthenticationEntryPoint;
 import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.dramancompany.taxiServiceBe.user.dto.UserDto;
 import com.dramancompany.taxiServiceBe.user.service.UserService;

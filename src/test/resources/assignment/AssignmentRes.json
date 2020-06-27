@@ -1,6 +1,9 @@
 {
   "id": 1,
-  "passengerId": 1,
+  "passenger": {
+    "id": 1,
+    "username": "je.chang@gmail.com"
+  },
   "driverId": null,
   "address": "서울시 강남구 강남역",
   "status": 0,

@@ -1,16 +1,18 @@
 package com.dramancompany.taxiServiceBe.assignment.domain;
 
 import com.dramancompany.taxiServiceBe.common.BaseEntity;
+import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,10 +26,14 @@ public class Assignment extends BaseEntity {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    public Long passengerId;
+    @OneToOne
+    @JoinColumn(name= "passenger_id", referencedColumnName = "id", nullable = false)
+    public User passenger;
 
-    public Long driverId;
+    @OneToOne
+    @JoinColumn(name= "driver_id", referencedColumnName = "id")
+    public User driver;
+
     @Column(nullable = false, length = 100)
     public String address;
     public Status status;
@@ -52,20 +58,20 @@ public class Assignment extends BaseEntity {
     }
 
     public boolean isCompleted() {
-        return driverId != null || status == Status.COMPLETE;
+        return driver != null || status == Status.COMPLETE;
     }
 
-    public Assignment complete(Long driverId) {
-        this.driverId = driverId;
+    public Assignment complete(User driver) {
+        this.driver = driver;
         this.status = Status.COMPLETE;
         this.completeDt = LocalDateTime.now();
         return this;
     }
 
     @Builder
-    public Assignment(Long passengerId, Long driverId, String address, Status status, LocalDateTime requestDt, LocalDateTime completeDt) {
-        this.passengerId = passengerId;
-        this.driverId = driverId;
+    public Assignment(User passenger, User driver, String address, Status status, LocalDateTime requestDt, LocalDateTime completeDt) {
+        this.passenger = passenger;
+        this.driver = driver;
         this.address = address;
         this.status = status;
         this.requestDt = requestDt;

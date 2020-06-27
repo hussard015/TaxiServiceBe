@@ -28,7 +28,6 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 1)
     private UserType userType;
 
-    @NoArgsConstructor
     public enum UserType {
         Passenger,
         Driver;

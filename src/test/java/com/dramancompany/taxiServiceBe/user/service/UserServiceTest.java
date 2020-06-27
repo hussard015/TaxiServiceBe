@@ -1,6 +1,7 @@
 package com.dramancompany.taxiServiceBe.user.service;
 
 import com.dramancompany.taxiServiceBe.ServiceTest;
+import com.dramancompany.taxiServiceBe.common.DuplicateUsernameException;
 import com.dramancompany.taxiServiceBe.common.TokenProvider;
 import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.dramancompany.taxiServiceBe.user.dto.UserDto;
@@ -45,7 +46,7 @@ public class UserServiceTest extends ServiceTest {
                 .build());
     }
 
-    @Test(expected = UsernameNotFoundException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void 로그인_이메일이_존재하지_않음() {
         // given
         UserDto.SignInReq req = UserDto.SignInReq.builder()
@@ -57,7 +58,7 @@ public class UserServiceTest extends ServiceTest {
         userService.signIn(req);
     }
 
-    @Test(expected = BadCredentialsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void 로그인_패스워드가_일치하지_않음() {
         // when
         UserDto.SignInReq req = UserDto.SignInReq.builder()
@@ -83,7 +84,7 @@ public class UserServiceTest extends ServiceTest {
         assertThat(res.getUserType()).isEqualTo(user.getUserType());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DuplicateUsernameException.class)
     public void 회원가입_중복된유저() {
         // given
         UserDto.SignUpReq req = UserDto.SignUpReq.builder()

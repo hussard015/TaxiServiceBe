@@ -1,11 +1,29 @@
 [
   {
     "id": 1,
-    "passengerId": 1,
+    "passenger": {
+      "id": 1,
+      "username": "je.chang@gmail.com"
+    },
     "driverId": null,
     "address": "서울시 강남구 강남역",
     "status": 0,
     "requestDt": "2020-06-27T13:06:31.419",
     "completeDt": null
+  },
+  {
+    "id": 2,
+    "passenger": {
+      "id": 1,
+      "username": "je.chang@gmail.com"
+    },
+    "driver": {
+      "id": 2,
+      "username": "je.chang2@gmail.com"
+    },
+    "address": "서울시 강남구 강남역",
+    "status": 1,
+    "requestDt": "2020-06-28T01:56:19.52",
+    "completeDt": "2020-06-28T01:59:39.252"
   }
 ]

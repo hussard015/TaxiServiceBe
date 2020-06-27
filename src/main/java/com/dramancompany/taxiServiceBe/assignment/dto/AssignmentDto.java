@@ -1,6 +1,8 @@
 package com.dramancompany.taxiServiceBe.assignment.dto;
 
 import com.dramancompany.taxiServiceBe.assignment.domain.Assignment;
+import com.dramancompany.taxiServiceBe.user.domain.User;
+import com.dramancompany.taxiServiceBe.user.dto.UserSimpleDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,9 +28,9 @@ public class AssignmentDto {
             this.address = address;
         }
 
-        public Assignment toEntity(Long passengerId) {
+        public Assignment toEntity(User passenger) {
             return Assignment.builder()
-                    .passengerId(passengerId)
+                    .passenger(passenger)
                     .address(this.address)
                     .status(Assignment.Status.WAITING)
                     .requestDt(LocalDateTime.now())
@@ -40,18 +42,18 @@ public class AssignmentDto {
     public static class Res {
 
         private Long id;
-        public Long passengerId;
-        public Long driverId;
+        public UserSimpleDto.Res passenger;
+        public UserSimpleDto.Res driver;
         public String address;
         public Assignment.Status status;
         public LocalDateTime requestDt;
         public LocalDateTime completeDt;
 
         @Builder
-        public Res(Long id, Long passengerId, Long driverId, String address, Assignment.Status status, LocalDateTime requestDt, LocalDateTime completeDt) {
+        public Res(Long id, UserSimpleDto.Res passenger, UserSimpleDto.Res driver, String address, Assignment.Status status, LocalDateTime requestDt, LocalDateTime completeDt) {
             this.id = id;
-            this.passengerId = passengerId;
-            this.driverId = driverId;
+            this.passenger = passenger;
+            this.driver = driver;
             this.address = address;
             this.status = status;
             this.requestDt = requestDt;
@@ -61,8 +63,8 @@ public class AssignmentDto {
         public static Res of(Assignment assignment) {
             return Res.builder()
                     .id(assignment.getId())
-                    .passengerId(assignment.getPassengerId())
-                    .driverId(assignment.getDriverId())
+                    .passenger(UserSimpleDto.Res.of(assignment.getPassenger()))
+                    .driver(assignment.getDriver() != null ? UserSimpleDto.Res.of(assignment.getDriver())  : null)
                     .address(assignment.getAddress())
                     .status(assignment.getStatus())
                     .requestDt(assignment.getRequestDt())

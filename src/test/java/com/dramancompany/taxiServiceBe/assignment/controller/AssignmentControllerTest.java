@@ -4,10 +4,8 @@ import com.dramancompany.taxiServiceBe.ControllerTest;
 import com.dramancompany.taxiServiceBe.assignment.domain.Assignment;
 import com.dramancompany.taxiServiceBe.assignment.dto.AssignmentDto;
 import com.dramancompany.taxiServiceBe.assignment.service.AssignmentService;
-import com.dramancompany.taxiServiceBe.common.JwtAuthenticationEntryPoint;
 import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -160,8 +158,12 @@ public class AssignmentControllerTest extends ControllerTest {
     private List<FieldDescriptor> getAssignmentResField() {
         return Arrays.asList(
                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("차량 배차 고유 아이디"),
-                fieldWithPath("passengerId").type(JsonFieldType.NUMBER).description("배차 요청자 고유 아이디"),
-                fieldWithPath("driverId").type(JsonFieldType.NUMBER).description("드라이버 고유 아이디").optional(),
+                fieldWithPath("passenger").type(JsonFieldType.OBJECT).description("배차 요청자"),
+                fieldWithPath("passenger.id").type(JsonFieldType.NUMBER).description("배차 요청자 고유 아이디"),
+                fieldWithPath("passenger.username").type(JsonFieldType.STRING).description("배차 요청자 이메일"),
+                fieldWithPath("driver").type(JsonFieldType.OBJECT).description("드라이버").optional(),
+                fieldWithPath("driver.id").type(JsonFieldType.NUMBER).description("드라이버 고유 아이디").optional(),
+                fieldWithPath("driver.username").type(JsonFieldType.STRING).description("드라이버 이메일").optional(),
                 fieldWithPath("address").type(JsonFieldType.STRING).description("주소 (100자 이하)"),
                 fieldWithPath("status").type(JsonFieldType.NUMBER).description("배차 상태 : " + Assignment.Status.toText()),
                 fieldWithPath("requestDt").type(JsonFieldType.STRING).description("요청 일시"),

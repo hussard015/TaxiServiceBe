@@ -6,6 +6,7 @@ import com.dramancompany.taxiServiceBe.assignment.dto.AssignmentDto;
 import com.dramancompany.taxiServiceBe.assignment.repository.AssignmentRepository;
 import com.dramancompany.taxiServiceBe.user.domain.User;
 import com.dramancompany.taxiServiceBe.user.repository.UserRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,7 @@ public class AssignmentServiceTest extends ServiceTest {
 
     @Before
     public void setUp() {
-        assignmentRepository.deleteAll();
-
-        assignmentService = new AssignmentService(assignmentRepository);
+        assignmentService = new AssignmentService(assignmentRepository, userRepository);
 
         passenger = userRepository.save(User.builder()
                 .username("je.chang@gmail.com")
@@ -63,22 +62,27 @@ public class AssignmentServiceTest extends ServiceTest {
 
         waitingAssignment = assignmentRepository.save(Assignment
                 .builder()
-                .passengerId(passenger.getId())
+                .passenger(passenger)
                 .address("서울시 강남구 강남역 3번출구")
-                .driverId(null)
+                .driver(null)
                 .status(Assignment.Status.WAITING)
                 .requestDt(LocalDateTime.now())
                 .build());
 
         completedAssignment = assignmentRepository.save(Assignment
                 .builder()
-                .passengerId(passenger2.getId())
-                .driverId(driver.getId())
+                .passenger(passenger2)
+                .driver(driver)
                 .address("서울시 강남구 강남역 3번출구")
                 .status(Assignment.Status.COMPLETE)
                 .requestDt(LocalDateTime.now().minusMinutes(10))
                 .completeDt(LocalDateTime.now())
                 .build());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        assignmentRepository.deleteAll();
     }
 
     @Test
@@ -87,14 +91,17 @@ public class AssignmentServiceTest extends ServiceTest {
         List<AssignmentDto.Res> resList = assignmentService.getAll();
         // then
         assertThat(resList.size()).isEqualTo(2);
-        assertThat(resList.get(0).getPassengerId()).isEqualTo(waitingAssignment.getPassengerId());
-        assertThat(resList.get(0).getDriverId()).isEqualTo(waitingAssignment.getDriverId());
+        assertThat(resList.get(0).getPassenger().getId()).isEqualTo(waitingAssignment.getPassenger().getId());
+        assertThat(resList.get(0).getPassenger().getUsername()).isEqualTo(waitingAssignment.getPassenger().getUsername());
+        assertThat(resList.get(0).getDriver()).isNull();
         assertThat(resList.get(0).getStatus()).isEqualTo(waitingAssignment.getStatus());
         assertThat(resList.get(0).getRequestDt()).isEqualTo(waitingAssignment.getRequestDt());
         assertThat(resList.get(0).getCompleteDt()).isEqualTo(waitingAssignment.getCompleteDt());
 
-        assertThat(resList.get(1).getPassengerId()).isEqualTo(completedAssignment.getPassengerId());
-        assertThat(resList.get(1).getDriverId()).isEqualTo(completedAssignment.getDriverId());
+        assertThat(resList.get(1).getPassenger().getId()).isEqualTo(completedAssignment.getPassenger().getId());
+        assertThat(resList.get(1).getPassenger().getUsername()).isEqualTo(completedAssignment.getPassenger().getUsername());
+        assertThat(resList.get(1).getDriver().getId()).isEqualTo(completedAssignment.getDriver().getId());
+        assertThat(resList.get(1).getDriver().getUsername()).isEqualTo(completedAssignment.getDriver().getUsername());
         assertThat(resList.get(1).getStatus()).isEqualTo(completedAssignment.getStatus());
         assertThat(resList.get(1).getRequestDt()).isEqualTo(completedAssignment.getRequestDt());
         assertThat(resList.get(1).getCompleteDt()).isEqualTo(completedAssignment.getCompleteDt());
@@ -137,8 +144,8 @@ public class AssignmentServiceTest extends ServiceTest {
 
         // then
         assertThat(res.getId()).isNotNull();
-        assertThat(res.getPassengerId()).isEqualTo(passenger2.getId());
-        assertThat(res.getDriverId()).isNull();
+        assertThat(res.getPassenger().getId()).isEqualTo(passenger2.getId());
+        assertThat(res.getDriver()).isNull();
         assertThat(res.getAddress()).isEqualTo(req.getAddress());
         assertThat(res.getStatus()).isEqualTo(Assignment.Status.WAITING);
         assertThat(res.getRequestDt()).isNotNull();
@@ -171,8 +178,8 @@ public class AssignmentServiceTest extends ServiceTest {
         AssignmentDto.Res res = assignmentService.catchAssignment(driver, waitingAssignment.getId());
         // then
         assertThat(res.getId()).isNotNull();
-        assertThat(res.getPassengerId()).isEqualTo(waitingAssignment.getPassengerId());
-        assertThat(res.getDriverId()).isEqualTo(driver.getId());
+        assertThat(res.getPassenger().getId()).isEqualTo(waitingAssignment.getPassenger().getId());
+        assertThat(res.getDriver().getId()).isEqualTo(driver.getId());
         assertThat(res.getAddress()).isEqualTo(waitingAssignment.getAddress());
         assertThat(res.getStatus()).isEqualTo(Assignment.Status.COMPLETE);
         assertThat(res.getRequestDt()).isNotNull();
