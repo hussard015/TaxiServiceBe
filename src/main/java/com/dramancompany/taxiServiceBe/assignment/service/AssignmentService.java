@@ -51,10 +51,12 @@ public class AssignmentService {
 
         assignment.complete(user.getId());
 
-        return AssignmentDto.Res.of(assignment);
+        return AssignmentDto.Res.of(assignmentRepository.save(assignment));
     }
 
     private boolean hasAssignment(Long passengerId) {
-        return assignmentRepository.findByPassengerIdAndStatus(passengerId, Assignment.Status.WAITING).isPresent();
+        return assignmentRepository.findTopByPassengerIdOrderByRequestDtDesc(passengerId)
+                .filter(assignment -> assignment.getStatus() == Assignment.Status.WAITING)
+                .isPresent();
     }
 }

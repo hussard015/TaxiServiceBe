@@ -11,5 +11,5 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
     List<Assignment> findByOrderByRequestDtDesc();
 
-    Optional<Assignment> findByPassengerIdAndStatus(Long PassengerId, Assignment.Status status);
+    Optional<Assignment> findTopByPassengerIdOrderByRequestDtDesc(Long PassengerId);
 }
