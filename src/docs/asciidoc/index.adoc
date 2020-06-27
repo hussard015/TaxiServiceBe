@@ -30,7 +30,7 @@
 | `Authorization`
 | API를 사용하기 위한 인증 키 +
 예) 'Bearer ' + 토큰 +
-* /api/v1/pub/** 의 경우는 인증키가 불필요.
+* /api/v1/pub/** 의 경우는 토큰 불필요.
 |===
 
 === Error
