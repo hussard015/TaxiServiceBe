@@ -124,7 +124,7 @@ public class AssignmentControllerTest extends ControllerTest {
                         getDocumentRequest(),
                         getDocumentResponse(),
                         responseFields(
-                                fieldWithPath("[]").description("배차 목록 조회")
+                                fieldWithPath("[]").description("배차 목록")
                         )
                                 .andWithPrefix("[].",
                                         getAssignmentResField()

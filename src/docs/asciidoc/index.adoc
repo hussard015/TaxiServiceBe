@@ -1,4 +1,4 @@
-= Rest Docs Sample API Document
+= 택시 배차 앱 REST API Document
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -8,14 +8,14 @@
 
 [[introduction]]
 == 소개
-택시 배차 앱 API
+택시 배차 앱 API 입니다.
 
 == 공통 사항
 
 === Domain
 
 |===
-| 환경 | domain
+| domain
 
 | `http://localhost:8080`
 
@@ -29,7 +29,7 @@
 
 | `Authorization`
 | API를 사용하기 위한 인증 키 +
-예) 'Bearer' + 토큰
+예) 'Bearer ' + 토큰
 |===
 
 [[사용자]]
@@ -37,3 +37,107 @@
 == 사용자
 
 === 회원 가입
+
+CURL:
+
+include::{snippets}/user-signUp/curl-request.adoc[]
+
+Request Fields:
+
+include::{snippets}/user-signUp/request-fields.adoc[]
+
+Request HTTP Example:
+
+include::{snippets}/user-signUp/http-request.adoc[]
+
+Response Fields:
+
+include::{snippets}/user-signUp/response-fields.adoc[]
+
+Response HTTP Example:
+
+include::{snippets}/user-signUp/http-response.adoc[]
+
+=== 회원 로그인
+
+CURL:
+
+include::{snippets}/user-signIn/curl-request.adoc[]
+
+Request Fields:
+
+include::{snippets}/user-signIn/request-fields.adoc[]
+
+Request HTTP Example:
+
+include::{snippets}/user-signIn/http-request.adoc[]
+
+Response Fields:
+
+include::{snippets}/user-signIn/response-fields.adoc[]
+
+Response HTTP Example:
+
+include::{snippets}/user-signIn/http-response.adoc[]
+
+=== 배차 목록 조회
+
+CURL:
+
+include::{snippets}/assignment-list/curl-request.adoc[]
+
+Request HTTP Example:
+
+include::{snippets}/assignment-list/http-request.adoc[]
+
+Response Fields:
+
+include::{snippets}/assignment-list/response-fields.adoc[]
+
+Response HTTP Example:
+
+include::{snippets}/assignment-list/http-response.adoc[]
+
+=== 배차 요청
+
+CURL:
+
+include::{snippets}/assignment-request/curl-request.adoc[]
+
+Request Fields:
+
+include::{snippets}/assignment-request/request-fields.adoc[]
+
+Request HTTP Example:
+
+include::{snippets}/assignment-request/http-request.adoc[]
+
+Response Fields:
+
+include::{snippets}/assignment-request/response-fields.adoc[]
+
+Response HTTP Example:
+
+include::{snippets}/assignment-request/http-response.adoc[]
+
+=== 배차 완료
+
+CURL:
+
+include::{snippets}/assignment-complete/curl-request.adoc[]
+
+Path Parameters:
+
+include::{snippets}/assignment-complete/path-parameters.adoc[]
+
+Request HTTP Example:
+
+include::{snippets}/assignment-complete/http-request.adoc[]
+
+Response Fields:
+
+include::{snippets}/assignment-complete/response-fields.adoc[]
+
+Response HTTP Example:
+
+include::{snippets}/assignment-complete/http-response.adoc[]
