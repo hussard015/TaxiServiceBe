@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,9 +23,6 @@ public class JwtFilter extends BasicAuthenticationFilter {
 
     private final String HEADER_STRING = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
-
-    @Value("${security.jwt.secret_key}")
-    private String SECRET_KEY;
 
     public JwtFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -55,9 +53,10 @@ public class JwtFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
             // parse the token and validate it (decode)
-            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET_KEY))
+            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(JwtSetting.SECRET_KEY))
                     .build()
                     .verify(token.replace(TOKEN_PREFIX, ""));
+
 
             try {
                 User user = User
