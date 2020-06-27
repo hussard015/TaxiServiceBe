@@ -29,8 +29,24 @@
 
 | `Authorization`
 | API를 사용하기 위한 인증 키 +
-예) 'Bearer ' + 토큰
+예) 'Bearer ' + 토큰 +
+* /api/v1/pub/** 의 경우는 인증키가 불필요.
 |===
+
+=== Error
+|===
+| name | 설명
+
+| status
+| http 상태 코드
+| message
+| 에러 메세지
+| timestamp
+| 발생 시간
+| errors
+| 에러 상세 내용 (optional)
+|===
+
 
 [[사용자]]
 

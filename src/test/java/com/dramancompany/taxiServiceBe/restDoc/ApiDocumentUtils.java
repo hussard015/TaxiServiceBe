@@ -11,8 +11,8 @@ public interface ApiDocumentUtils {
         return preprocessRequest(
                 modifyUris()
                         .scheme("http")
-                        .host("localhost:8080")
-                        .removePort(),
+                        .host("localhost")
+                        .port(8080),
                 prettyPrint());
     }
 
