@@ -32,16 +32,13 @@ dependencies {
     }
     testCompile('org.springframework.security:spring-security-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+    testCompile('org.assertj:assertj-core:3.6.1')
     implementation 'com.auth0:java-jwt:3.10.3'
     implementation 'commons-io:commons-io:2.6'
     implementation 'com.zsoltfabok:sqlite-dialect:1.0'
     implementation 'org.xerial:sqlite-jdbc:3.32.3'
     implementation 'junit:junit:4.12'
 }
-
-//test {
-//    useJUnitPlatform()
-//}
 
 // for spring rest doc
 ext {
