@@ -19,12 +19,10 @@ create table IF NOT EXISTS assignment (
 	modified_date datetime,
 	address varchar(100) not null,
 	complete_dt datetime,
-	passenger_id bigint not null
-		constraint fk_passenger_id_to_user_id
-			references user,
-    driver_id bigint not null
-		constraint fk_passenger_id_to_user_id
-			references user,
+	passenger_id bigint not null,
+    driver_id bigint,
 	request_dt datetime,
-	status integer
+	status integer,
+	FOREIGN KEY (passenger_id) references user,
+	FOREIGN KEY (driver_id) references user
 );

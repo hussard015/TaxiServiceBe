@@ -1,5 +1,6 @@
-package com.dramancompany.taxiServiceBe.common;
+package com.dramancompany.taxiServiceBe.config;
 
+import com.dramancompany.taxiServiceBe.common.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

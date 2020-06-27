@@ -49,7 +49,6 @@ public class JwtFilter extends BasicAuthenticationFilter {
     private Authentication getUsernamePasswordAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            // parse the token and validate it (decode)
             try {
                 DecodedJWT jwt = JWT.require(Algorithm.HMAC512(JwtSetting.SECRET_KEY))
                         .build()
