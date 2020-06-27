@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id "org.asciidoctor.convert" version "1.5.9.2"
 }
 
 group = 'com.dramancompany'
@@ -23,17 +24,43 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'com.auth0:java-jwt:3.10.3'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    testCompile('org.springframework.security:spring-security-test')
+    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+    implementation 'com.auth0:java-jwt:3.10.3'
+    implementation 'commons-io:commons-io:2.6'
     implementation 'com.zsoltfabok:sqlite-dialect:1.0'
     implementation 'org.xerial:sqlite-jdbc:3.32.3'
+    implementation 'junit:junit:4.12'
 }
 
-test {
-    useJUnitPlatform()
+//test {
+//    useJUnitPlatform()
+//}
+
+// for spring rest doc
+ext {
+    snippetsDir = file("build/generated-snippets")
 }
+
+asciidoctor {
+    attributes 'snippets': snippetsDir
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+task copyRestDoc (type: Copy) {
+    from "${buildDir}/asciidoc/html5"
+    into 'src/main/resources/static/docs'
+}
+
+build {
+    dependsOn asciidoctor
+    dependsOn copyRestDoc
+}
+

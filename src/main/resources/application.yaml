@@ -10,11 +10,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLiteDialect
     open-in-view: false
-    hibernate:
-      ddl-auto: create-drop
-
-
-security:
-  jwt:
-    expire_time: 3600
-    secret_key: hussard015
+    show-sql: true
+#    hibernate:
+#      ddl-auto: create
