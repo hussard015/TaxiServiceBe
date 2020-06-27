@@ -52,7 +52,6 @@ public class AssignmentControllerTest extends ControllerTest {
 
         // when
         mvc.perform(post("/api/v1/assignment")
-                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(assignmentReq)
         )
@@ -82,7 +81,6 @@ public class AssignmentControllerTest extends ControllerTest {
 
         // when
         mvc.perform(post("/api/v1/assignment/driver/{assignmentId}", assignmentId)
-                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
         )
                 // then
@@ -112,7 +110,6 @@ public class AssignmentControllerTest extends ControllerTest {
 
         // when
         mvc.perform(get("/api/v1/assignment")
-                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
         )
                 // then

@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 @WebMvcTest
 @Import({JwtAuthenticationEntryPoint.class})
 @AutoConfigureRestDocs
+@ActiveProfiles("test")
 @Ignore
 public class ControllerTest {
 
