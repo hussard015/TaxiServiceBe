@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/hussard015/TaxiServiceBe.svg?branch=master)](https://travis-ci.org/hussard015/TaxiServiceBe)
+[![Coverage Status](https://coveralls.io/repos/github/hussard015/TaxiServiceBe/badge.svg?branch=develop)](https://coveralls.io/github/hussard015/TaxiServiceBe?branch=develop)
+
 # TaxiServiceBe
 - 택시 배차 앱 API 서버 (과제용)
 
