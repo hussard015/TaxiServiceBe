@@ -82,6 +82,7 @@ public class UserServiceTest extends ServiceTest {
         // then
         assertThat(res.getUsername()).isEqualTo(user.getUsername());
         assertThat(res.getUserType()).isEqualTo(user.getUserType());
+        assertThat(res.getToken()).isNotNull();
     }
 
     @Test(expected = DuplicateUsernameException.class)
