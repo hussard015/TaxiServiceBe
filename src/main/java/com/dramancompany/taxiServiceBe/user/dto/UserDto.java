@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UserDto {
@@ -14,8 +15,9 @@ public class UserDto {
     public static class SignUpReq {
 
         @Email(message = "이메일 형식이 아닙니다.")
+        @NotEmpty
         private String username;
-        @NotNull
+        @NotEmpty
         private String password;
         @NotNull
         private User.UserType userType;
@@ -67,8 +69,9 @@ public class UserDto {
     @Getter
     public static class SignInReq {
         @Email(message = "이메일 형식이 아닙니다.")
+        @NotEmpty
         private String username;
-        @NotNull
+        @NotEmpty
         private String password;
 
         @Builder
