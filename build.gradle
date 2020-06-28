@@ -3,6 +3,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
     id "org.asciidoctor.convert" version "1.5.9.2"
+    id 'com.github.kt3k.coveralls' version '2.10.1'
+    id "jacoco"
 }
 
 group = 'com.dramancompany'
@@ -38,6 +40,7 @@ dependencies {
     implementation 'com.zsoltfabok:sqlite-dialect:1.0'
     implementation 'org.xerial:sqlite-jdbc:3.32.3'
     implementation 'junit:junit:4.12'
+    implementation 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
 }
 
 // for spring rest doc
@@ -60,4 +63,6 @@ build {
     dependsOn asciidoctor
     dependsOn copyRestDoc
 }
+
+
 
