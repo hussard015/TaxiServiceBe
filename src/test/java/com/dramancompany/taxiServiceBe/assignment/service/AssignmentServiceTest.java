@@ -95,16 +95,16 @@ public class AssignmentServiceTest extends ServiceTest {
         assertThat(resList.get(0).getPassenger().getUsername()).isEqualTo(waitingAssignment.getPassenger().getUsername());
         assertThat(resList.get(0).getDriver()).isNull();
         assertThat(resList.get(0).getStatus()).isEqualTo(waitingAssignment.getStatus());
-        assertThat(resList.get(0).getRequestDt()).isEqualTo(waitingAssignment.getRequestDt());
-        assertThat(resList.get(0).getCompleteDt()).isEqualTo(waitingAssignment.getCompleteDt());
+        assertThat(resList.get(0).getRequestDt()).isEqualToIgnoringNanos(waitingAssignment.getRequestDt());
+        assertThat(resList.get(0).getCompleteDt()).isNull();
 
         assertThat(resList.get(1).getPassenger().getId()).isEqualTo(completedAssignment.getPassenger().getId());
         assertThat(resList.get(1).getPassenger().getUsername()).isEqualTo(completedAssignment.getPassenger().getUsername());
         assertThat(resList.get(1).getDriver().getId()).isEqualTo(completedAssignment.getDriver().getId());
         assertThat(resList.get(1).getDriver().getUsername()).isEqualTo(completedAssignment.getDriver().getUsername());
         assertThat(resList.get(1).getStatus()).isEqualTo(completedAssignment.getStatus());
-        assertThat(resList.get(1).getRequestDt()).isEqualTo(completedAssignment.getRequestDt());
-        assertThat(resList.get(1).getCompleteDt()).isEqualTo(completedAssignment.getCompleteDt());
+        assertThat(resList.get(1).getRequestDt()).isEqualToIgnoringNanos(completedAssignment.getRequestDt());
+        assertThat(resList.get(1).getCompleteDt()).isEqualToIgnoringNanos(completedAssignment.getCompleteDt());
     }
 
     @Test(expected = IllegalArgumentException.class)
