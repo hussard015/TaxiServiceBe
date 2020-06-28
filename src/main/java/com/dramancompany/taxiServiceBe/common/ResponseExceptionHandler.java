@@ -48,7 +48,8 @@ public class ResponseExceptionHandler {
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .message("필드 정보가 잘못되었습니다.")
+                .errors(ErrorResponse.FieldError.of("", "", e.getMessage()))
                 .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
